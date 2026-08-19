@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: #f4f9f4;
+    color: #222;
+}
+
+header {
+    background: #176b3a;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+nav {
+    background: #0d4426;
+    text-align: center;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #9cffb5;
+}
+
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: #dff5e5;
+}
+
+.hero h2 {
+    font-size: 35px;
+    color: #176b3a;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 15px auto;
+}
+
+button {
+    background: #176b3a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0d4426;
+}
+
+section {
+    padding: 50px 10%;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #176b3a;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+.card h3 {
+    color: #176b3a;
+    margin-bottom: 10px;
+}
+
+#effects {
+    background: #eaf7ed;
+}
+
+#effects ul {
+    max-width: 600px;
+    margin: auto;
+}
+
+#effects li {
+    margin: 12px 0;
+}
+
+.solutions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.solutions p {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 3px 8px #ccc;
+}
+
+#message {
+    font-weight: bold;
+    color: #176b3a;
+}
+
+footer {
+    background: #0d4426;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+@media (max-width: 800px) {
+    .cards,
+    .solutions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .cards,
+    .solutions {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    nav a {
+        margin: 5px;
+    }
+}
