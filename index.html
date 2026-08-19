@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Friendship Love Calculator ❤️</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background:
+          radial-gradient(circle at top left, #ff758c, transparent 35%),
+          radial-gradient(circle at bottom right, #ff7eb3, transparent 35%),
+          linear-gradient(135deg, #16001f, #3d003f, #180020);
+        overflow-x: hidden;
+        color: white;
+      }
+
+      /* Floating hearts */
+      .heart {
+        position: fixed;
+        bottom: -30px;
+        font-size: 25px;
+        animation: floatHeart linear infinite;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      @keyframes floatHeart {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0;
+        }
+
+        20% {
+          opacity: 0.8;
+        }
+
+        100% {
+          transform: translateY(-110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        width: 92%;
+        max-width: 500px;
+        padding: 35px 28px;
+        border-radius: 30px;
+
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        box-shadow:
+          0 25px 70px rgba(0, 0, 0, 0.45),
+          inset 0 0 30px rgba(255, 255, 255, 0.04);
+
+        text-align: center;
+        position: relative;
+        z-index: 5;
+      }
+
+      .logo {
+        font-size: 65px;
+        animation: heartbeat 1.3s infinite;
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+
+        25% {
+          transform: scale(1.15);
+        }
+
+        40% {
+          transform: scale(1);
+        }
+
+        60% {
+          transform: scale(1.12);
+        }
+      }
+
+      h1 {
+        font-size: 30px;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        color: #ffd5e5;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      .question {
+        font-size: 19px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #fff;
+      }
+
+      .input-box {
+        margin: 15px 0;
+        text-align: left;
+      }
+
+      .input-box label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+        color: #ffd4e5;
+      }
+
+      input {
+        width: 100%;
+        padding: 15px 18px;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        color: white;
+        font-size: 15px;
+
+        transition: 0.3s;
+      }
+
+      input::placeholder {
+        color: #e9b9ca;
+      }
+
+      input:focus {
+        border-color: #ff6b9d;
+        box-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .calculate-btn {
+        width: 100%;
+        margin-top: 15px;
+        padding: 15px;
+
+        border: none;
+        border-radius: 16px;
+
+        background: linear-gradient(135deg, #ff416c, #ff4b8b);
+
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        box-shadow: 0 10px 25px rgba(255, 65, 108, 0.35);
+
+        transition: 0.3s;
+      }
+
+      .calculate-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(255, 65, 108, 0.55);
+      }
+
+      .calculate-btn:active {
+        transform: scale(0.97);
+      }
+
+      /* Result */
+      .result {
+        display: none;
+        margin-top: 30px;
+        animation: resultAppear 0.8s ease;
+      }
+
+      @keyframes resultAppear {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.9);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .names {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .percentage {
+        font-size: 70px;
+        font-weight: 800;
+
+        background: linear-gradient(135deg, #fff, #ff91b5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .love-text {
+        font-size: 17px;
+        margin-top: -5px;
+        margin-bottom: 18px;
+        color: #ffd5e4;
+      }
+
+      .progress-container {
+        width: 100%;
+        height: 18px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 50px;
+        overflow: hidden;
+        margin-bottom: 22px;
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        border-radius: 50px;
+
+        background: linear-gradient(90deg, #ff416c, #ff758c, #ffb6c9);
+
+        transition: width 2s ease;
+      }
+
+      .shayari {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 20px;
+        border-radius: 20px;
+
+        border-left: 4px solid #ff6b9d;
+
+        font-size: 15px;
+        line-height: 1.8;
+
+        color: #ffe5ef;
+      }
+
+      .try-again {
+        margin-top: 20px;
+        padding: 12px 25px;
+
+        border-radius: 13px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+
+        background: transparent;
+        color: white;
+
+        cursor: pointer;
+        font-size: 14px;
+
+        transition: 0.3s;
+      }
+
+      .try-again:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .footer {
+        margin-top: 22px;
+        font-size: 11px;
+        color: #d8a8ba;
+      }
+
+      .error {
+        color: #ffb0c8;
+        font-size: 13px;
+        margin-top: 8px;
+        display: none;
+      }
+
+      @media (max-width: 500px) {
+        .container {
+          padding: 28px 20px;
+        }
+
+        h1 {
+          font-size: 25px;
+        }
+
+        .logo {
+          font-size: 55px;
+        }
+
+        .percentage {
+          font-size: 58px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Floating Hearts -->
+    <div class="heart" style="left: 5%; animation-duration: 8s">❤️</div>
+    <div
+      class="heart"
+      style="left: 15%; animation-duration: 11s; animation-delay: 2s">
+      💖
+    </div>
+    <div
+      class="heart"
+      style="left: 30%; animation-duration: 9s; animation-delay: 1s">
+      💕
+    </div>
+    <div
+      class="heart"
+      style="left: 50%; animation-duration: 12s; animation-delay: 3s">
+      ❤️
+    </div>
+    <div class="heart" style="left: 70%; animation-duration: 10s">💗</div>
+    <div
+      class="heart"
+      style="left: 85%; animation-duration: 13s; animation-delay: 2s">
+      💞
+    </div>
+    <div
+      class="heart"
+      style="left: 95%; animation-duration: 9s; animation-delay: 4s">
+      ❤️
+    </div>
+
+    <div class="container">
+      <div class="logo">❤️</div>
+
+      <h1>Love Calculator</h1>
+
+      <p class="subtitle">Discover how much your friend loves you 💕</p>
+
+      <div class="question">💌 How much does your friend love you?</div>
+
+      <!-- Name 1 -->
+      <div class="input-box">
+        <label>👤 Enter Your Name</label>
+
+        <input
+          type="text"
+          id="name1"
+          placeholder="Enter your name..."
+          maxlength="30" />
+      </div>
+
+      <!-- Name 2 -->
+      <div class="input-box">
+        <label>💖 Enter Your Friend's Name</label>
+
+        <input
+          type="text"
+          id="name2"
+          placeholder="Enter friend's name..."
+          maxlength="30" />
+      </div>
+
+      <div class="error" id="error">Please enter both names ❤️</div>
+
+      <button class="calculate-btn" onclick="calculateLove()">
+        💕 Calculate Love Percentage
+      </button>
+
+      <!-- Result -->
+      <div class="result" id="result">
+        <div class="names" id="names"></div>
+
+        <div class="percentage"><span id="percentage">0</span>%</div>
+
+        <div class="love-text" id="loveText"></div>
+
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="shayari" id="shayari"></div>
+
+        <button class="try-again" onclick="resetCalculator()">
+          🔄 Calculate Again
+        </button>
+      </div>
+
+      <div class="footer">❤️ Just for fun • Love has no real percentage ❤️</div>
+    </div>
+
+    <script>
+      /*
+        ==========================================
+        LOVE CALCULATOR
+        ==========================================
+
+        Special combinations:
+
+        R + R = 90-100
+        R + N = 90-100
+        N + R = 90-100
+
+        Every other combination = below 90
+    */
+
+      function calculateLove() {
+        const name1 = document.getElementById("name1").value.trim();
+
+        const name2 = document.getElementById("name2").value.trim();
+
+        const error = document.getElementById("error");
+
+        // Validation
+        if (name1 === "" || name2 === "") {
+          error.style.display = "block";
+
+          return;
+        }
+
+        error.style.display = "none";
+
+        // Convert names to lowercase
+        const first = name1.toLowerCase();
+
+        const second = name2.toLowerCase();
+
+        let lovePercentage;
+
+        /*
+            SPECIAL CONDITIONS
+
+            r+r
+            r+n
+            n+r
+        */
+
+        const firstLetter = first.charAt(0);
+
+        const secondLetter = second.charAt(0);
+
+        if (firstLetter === "r" && secondLetter === "r") {
+          lovePercentage = randomNumber(90, 100);
+        } else if (firstLetter === "r" && secondLetter === "n") {
+          lovePercentage = randomNumber(90, 100);
+        } else if (firstLetter === "n" && secondLetter === "r") {
+          lovePercentage = randomNumber(90, 100);
+        } else {
+          /*
+                All other combinations
+                must stay below 90
+            */
+
+          lovePercentage = randomNumber(45, 89);
+        }
+
+        showResult(name1, name2, lovePercentage);
+      }
+
+      /*
+        Random number generator
+    */
+
+      function randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      /*
+        Display result
+    */
+
+      function showResult(name1, name2, percentage) {
+        const result = document.getElementById("result");
+
+        const names = document.getElementById("names");
+
+        const percentageElement = document.getElementById("percentage");
+
+        const progressBar = document.getElementById("progressBar");
+
+        const loveText = document.getElementById("loveText");
+
+        const shayari = document.getElementById("shayari");
+
+        result.style.display = "block";
+
+        names.innerHTML = `${name1} ❤️ ${name2}`;
+
+        /*
+            Love message
+        */
+
+        if (percentage >= 95) {
+          loveText.innerHTML = "🔥 Best Friends Forever! ❤️";
+        } else if (percentage >= 90) {
+          loveText.innerHTML = "💖 Your friendship is truly special!";
+        } else if (percentage >= 75) {
+          loveText.innerHTML = "💕 There is a beautiful bond between you!";
+        } else if (percentage >= 60) {
+          loveText.innerHTML = "😊 A sweet friendship is growing!";
+        } else {
+          loveText.innerHTML = "😄 Friendship needs a little more time!";
+        }
+
+        /*
+            Shayari selection
+        */
+
+        if (percentage >= 95) {
+          shayari.innerHTML = `
+                "Dosti woh nahi jo har pal saath ho,<br>
+                Dosti woh hai jo door rehkar bhi dil ke paas ho. ❤️<br><br>
+                Tum dono ki dosti hamesha yunhi khaas rahe,<br>
+                Har pal chehre par ek pyari si muskaan rahe. 💕"
+            `;
+        } else if (percentage >= 90) {
+          shayari.innerHTML = `
+                "Kuch rishte dil se ban jaate hain,<br>
+                Bina kahe hi sab samajh jaate hain. 💖<br><br>
+                Aisi hi hai tum dono ki yaari,<br>
+                Jo lagti hai duniya mein sabse pyaari. ❤️"
+            `;
+        } else if (percentage >= 75) {
+          shayari.innerHTML = `
+                "Dosti ka rishta bada hi pyara hota hai,<br>
+                Har gham mein ek sahara hota hai. 🌸<br><br>
+                Muskurate raho tum dono sada,<br>
+                Kyunki dosti mein hi chhupa hai khushi ka wada. 💕"
+            `;
+        } else if (percentage >= 60) {
+          shayari.innerHTML = `
+                "Thodi si baatein, thodi si hasi,<br>
+                Dosti mein hoti hai har khushi. 😊<br><br>
+                Rishta abhi naya hai magar,<br>
+                Shayad ban jaye kal dil ka safar. 💗"
+            `;
+        } else {
+          shayari.innerHTML = `
+                "Har dosti ki ek kahani hoti hai,<br>
+                Har kahani mein ek nishani hoti hai. 🌷<br><br>
+                Aaj percentage kam hai toh kya hua,<br>
+                Kal dosti aur bhi gehri ho sakti hai. ❤️"
+            `;
+        }
+
+        /*
+            Animate percentage
+        */
+
+        let current = 0;
+
+        const interval = setInterval(() => {
+          current++;
+
+          percentageElement.textContent = current;
+
+          if (current >= percentage) {
+            clearInterval(interval);
+          }
+        }, 20);
+
+        /*
+            Animate progress bar
+        */
+
+        setTimeout(() => {
+          progressBar.style.width = percentage + "%";
+        }, 100);
+
+        /*
+            Scroll to result
+        */
+
+        setTimeout(() => {
+          result.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }, 200);
+      }
+
+      /*
+        Reset calculator
+    */
+
+      function resetCalculator() {
+        document.getElementById("name1").value = "";
+
+        document.getElementById("name2").value = "";
+
+        document.getElementById("result").style.display = "none";
+
+        document.getElementById("progressBar").style.width = "0%";
+
+        document.getElementById("percentage").textContent = "0";
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      /*
+        ENTER KEY SUPPORT
+    */
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          calculateLove();
+        }
+      });
+    </script>
+  </body>
+</html>
